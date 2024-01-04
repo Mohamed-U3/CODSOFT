@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1704393724 source:d:\projects\codsoft\number_guessing_game\main.cpp
+	<iostream>
+	<windows.h>
+	<cstdlib>
+	<ctime>
+
