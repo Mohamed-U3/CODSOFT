@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1704494222 source:d:\projects\codsoft\tic_tac_toe_game\main.cpp
+	<iostream>
+	<stdio.h>
+	<string.h>
+	"Game_functions.h"
+
+1704494035 d:\projects\codsoft\tic_tac_toe_game\game_functions.h
+
+1704493627 source:d:\projects\codsoft\tic_tac_toe_game\game_functions.cpp
+	<iostream>
+	<string.h>
+	"Game_functions.h"
+
