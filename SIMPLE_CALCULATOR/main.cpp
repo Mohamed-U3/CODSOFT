@@ -58,5 +58,7 @@ int main()
         }
         else cout << "wrong Input!! .. Try again.. \n";
 
+    }
+
     return 0;
 }
