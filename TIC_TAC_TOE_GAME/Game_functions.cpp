@@ -187,3 +187,49 @@ bool O_winning_check()
 
     return winner;
 }
+
+void Game_Start()
+{
+    start:
+    init_grid();
+    int moves_counter = 0;
+    bool won = 0;
+    while(moves_counter < 9)
+    {
+        //Player X turn
+        system("cls");
+        show_grid();
+        X_player_turn();
+        moves_counter++;
+        won = X_winning_check();
+        if(X_winning_check()) cout<<"\nPlayer (X) has won !! \n\tCongratulation :D"<<endl;
+        if(moves_counter >= 9 || won) break;
+
+        //Player O turn
+        system("cls");
+        show_grid();
+        O_player_turn();
+        moves_counter++;
+        won = O_winning_check();
+        if(O_winning_check()) cout<<"\nPlayer (O) has won !! \n\tCongratulation :D"<<endl;
+        if(won) break;
+    }
+
+    if(won) cout<<"The game Ended"<<endl;
+    else cout<<"\nThe game Ended .. no one has won"<<endl;
+
+    char des = 0;
+    while(des != 'Y' && des != 'N' && des != 'y' && des != 'n')
+    {
+        cout<<"Do you wanna play again ? - [Y] for yes , [N] for No"<<endl;
+        cin >> des;
+        if(des == 'Y' || des == 'N' || des == 'y' || des == 'n')
+        {
+            if(des == 'Y' || des == 'y') goto start;
+            if(des == 'N' || des == 'n') exit(0);
+        }
+        else cout << "wrong Input!! .. Try again.. \n";
+
+    }
+
+}

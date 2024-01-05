@@ -11,5 +11,6 @@ void X_player_turn();
 void O_player_turn();
 bool X_winning_check();
 bool O_winning_check();
+void Game_Start();
 
 #endif // GAME_FUNCTIONS_H_INCLUDED
