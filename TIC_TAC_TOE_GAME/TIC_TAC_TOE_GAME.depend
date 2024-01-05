@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1704495418 source:d:\projects\codsoft\tic_tac_toe_game\main.cpp
+1704496217 source:d:\projects\codsoft\tic_tac_toe_game\main.cpp
 	<iostream>
 	<stdio.h>
 	<string.h>
@@ -7,7 +7,7 @@
 
 1704495347 d:\projects\codsoft\tic_tac_toe_game\game_functions.h
 
-1704495350 source:d:\projects\codsoft\tic_tac_toe_game\game_functions.cpp
+1704495865 source:d:\projects\codsoft\tic_tac_toe_game\game_functions.cpp
 	<iostream>
 	<string.h>
 	"Game_functions.h"
