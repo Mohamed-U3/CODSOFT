@@ -41,6 +41,7 @@ int main()
         else
         {
             cout << "Congratulations! You guessed the number in " << rounds << " attempts!\n";
+            system("pause");
             break;
         }
     }

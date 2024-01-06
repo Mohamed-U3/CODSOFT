@@ -32,6 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Linker>
+			<Add option="-static" />
+		</Linker>
 		<Unit filename="Game_functions.cpp" />
 		<Unit filename="Game_functions.h" />
 		<Unit filename="main.cpp" />
