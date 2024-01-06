@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1704559777 source:d:\projects\codsoft\to_do_list\add_note.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"properties.h"
+	"Add_Note.h"
+
+1704554836 d:\projects\codsoft\to_do_list\properities.h
+
+1704559585 d:\projects\codsoft\to_do_list\add_note.h
+
+1704560173 source:d:\projects\codsoft\to_do_list\delete_note.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Delete_Note.h"
+	"properties.h"
+
+1704559960 d:\projects\codsoft\to_do_list\delete_note.h
+
+1704558337 source:d:\projects\codsoft\to_do_list\display_note.cpp
+	<cstdio>
+	"properties.h"
+
+1704559840 source:d:\projects\codsoft\to_do_list\main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<windows.h>
+	<stdbool.h>
+	<string.h>
+	"properties.h"
+	"Add_Note.h"
+	"Delete_Note.h"
+	"Display_Note.h"
+
+1704553012 d:\projects\codsoft\to_do_list\display_note.h
+
+1704558351 source:d:\projects\codsoft\to_do_list\properties.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"properties.h"
+
+1704558324 d:\projects\codsoft\to_do_list\properties.h
+

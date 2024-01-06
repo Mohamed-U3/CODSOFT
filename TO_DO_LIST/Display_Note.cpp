@@ -1,20 +1,20 @@
-
+#include <cstdio>
 #include "properties.h"
 
 void displayStudents()
 {
     printf("Student List:\n");
-    printf("-----------------------------------------------------------------------------------------\n");
-    printf("| %-3s | %-50s | %-6s | %-4s | %-9s |\n", "ID", "Name", "Gender", "Age", "Study Year");
-    printf("-----------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("| %-3s | %-50s | %-8s |\n", "ID", "Name", "Done/Not");
+    printf("-----------------------------------------------------------------------\n");
 
-    for (int i = 0; i < MAX_STUDENTS; ++i) {
-        if (!studentArray[i].isEmpty) {
-            printf("| %-3d | %-50s | %-6c | %-4d | %-10d |\n", studentArray[i].studentID, studentArray[i].name,
-                   studentArray[i].gender, studentArray[i].age, studentArray[i].studyYear);
+    for (int i = 0; i < MAX_Notes; ++i) {
+        if (!NoteArray[i].isEmpty) {
+            printf("| %-3d | %-50s | %-8c |\n", NoteArray[i].NoteID, NoteArray[i].name,
+                   NoteArray[i].Done_notDone);
         }
     }
 
-    printf("-----------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------\n");
 
 }

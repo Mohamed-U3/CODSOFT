@@ -3,12 +3,10 @@
 
 
 //Function Declaration
-char getStudentGender();
-void student_name(char *name);
-char getStudentAge();
-char getStudentStudyYear();
-int addStudent(char name[], char gender, char age, char studyYear);
+char getNoteStatus();
+void note_name(char *name);
+int addNote(char name[], char gender);
 
-void addNewStudent(); //like the main function in this file.
+void addNewNote(); //like the main function in this file.
 
 #endif // ADD_NOTE_H_INCLUDED

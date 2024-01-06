@@ -2,41 +2,41 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "Delete_Note.h"
 #include "properties.h"
-#include "deleteStudent.h"
 
 
-void deleteExistStudent() //like main function in this file
+void deleteExistNote() //like main function in this file
 {
     system("cls");                          //clear the screen
     ///////////////////////////////////////////////////////////////////////////////
-    // getting student ID part
-    printf("student's ID to be deleted: ");
-    //delete a student by ID from the array and CSV/text file
-    deleteStudent((int)getStudentId());
+    // getting Note ID part
+    printf("Note's ID to be deleted: ");
+    //delete a Note by ID from the array and CSV/text file
+    deleteNote((int)getNoteID());
 }
 
-// Function to delete a student by ID from the array
-void deleteStudent(int studentID)
+// Function to delete a Note by ID from the array
+void deleteNote(int NoteID)
 {
-    if (studentID <= 0 || studentID > MAX_STUDENTS)
+    if (NoteID <= 0 || NoteID > MAX_Notes)
     {
-        printf("Invalid student ID.\n");
+        printf("Invalid Note ID.\n");
         return;
     }
 
-    if (!studentArray[studentID - 1].isEmpty)
+    if (!NoteArray[NoteID - 1].isEmpty)
     {
-        studentArray[studentID - 1].isEmpty = 1; // Set as empty
-        printf("Student with ID %d deleted.\n", studentID);
+        NoteArray[NoteID - 1].isEmpty = 1; // Set as empty
+        printf("Note with ID %d deleted.\n", NoteID);
         // Save to CSV/text file
-        saveToCSV("students.txt");
+        saveToCSV(File_Name);
     }
-    else printf("No student with ID %d found.\n", studentID);
+    else printf("No Note with ID %d found.\n", NoteID);
 }
 
-/*******************************************      Student's ID Function   ***********************/
-char getStudentId()
+/*******************************************      Note's ID Function   ***********************/
+char getNoteID()
 {
     char ID;
     char isValid = 0;
@@ -52,7 +52,6 @@ char getStudentId()
         while (getchar() != '\n'); // Clearing the input buffer
 
     } while (!isValid);
-
 
     return ID;
 }

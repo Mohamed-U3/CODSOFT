@@ -2,9 +2,9 @@
 #define DELETE_NOTE_H_INCLUDED
 
 //Function Declaration
-void deleteStudent(int studentID);
-char getStudentId();
+void deleteNote(int studentID);
+char getNoteID();
 
-void deleteExistStudent(); //like main function in this file
+void deleteExistNote(); //like main function in this file
 
 #endif // DELETE_NOTE_H_INCLUDED

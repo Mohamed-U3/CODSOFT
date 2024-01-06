@@ -3,51 +3,41 @@
 #include <stdlib.h>
 
 #include "properties.h"
-#include "addSudent.h"
+#include "Add_Note.h"
 
-char studentName[MAX_NAME_LENGTH];
-char studentGender;
-char studentAge;
-char studentStudyYear;
-char studentID;
+Student NoteArray[MAX_Notes];
 
-/*******************************************     add new Student Function   *************************/
-void addNewStudent()  //like the main function in this file.
+char noteName[MAX_NAME_LENGTH];
+char NoteState;
+char NoteID;
+
+/*******************************************     add new Note Function   *************************/
+void addNewNote()  //like the main function in this file.
 {
     system("cls");                          //clear the screen
     ///////////////////////////////////////////////////////////////////////////////
     // getting student name part
-    printf("student's name (maximum 50 characters): ");
-    student_name(studentName);
-    printf("Student's name: %s\n", studentName);
+    printf("(maximum 50 characters)\nEnter a Task: ");
+    note_name(noteName);
+    printf("Task's note: %s\n", noteName);
     ///////////////////////////////////////////////////////////////////////////////
     // getting student Gender part
-    printf("Gender(M/F): ");
-    studentGender = getStudentGender();
-    if(studentGender == 'M')
-        printf("Student's gender: Male\n");
+    printf("\n'D' for Done - 'N' for Not Done\nNote Status: ");
+    NoteState = getNoteStatus();
+    if(NoteState == 'D')
+        printf("Note is Done\n");
     else
-        printf("Student's gender: Female\n");
-    ///////////////////////////////////////////////////////////////////////////////
-    // getting student Age part
-    printf("Age: ");
-    studentAge = getStudentAge();
-    printf("Student's age (1-30): %d\n", studentAge);
-    ///////////////////////////////////////////////////////////////////////////////
-    // getting student Study year part
-    printf("Study year (1-5): ");
-    studentStudyYear = getStudentStudyYear();
-    printf("Student Study Year: %d\n", studentStudyYear);
+        printf("Note still in process\n");
     ///////////////////////////////////////////////////////////////////////////////
     //adding the student in the array of the students.
-    studentID = (char) addStudent(studentName, studentGender, studentAge, studentStudyYear);
-    printf("\n\n >>Student with ID: %d  - is added to the system\n", studentID);
+    NoteID = (char) addNote(noteName, NoteState);
+    printf("\n\n >>Student with ID: %d  - is added to the system\n", NoteID);
     // Save to CSV file
-    saveToCSV("students.txt");
+    saveToCSV(File_Name);
 }
 
-/*******************************************      Student's Name Function   *************************/
-void student_name(char *name)
+/*******************************************      Note's content Function   *************************/
+void note_name(char *name)
 {
     fgets(name, MAX_NAME_LENGTH, stdin);
 
@@ -57,100 +47,54 @@ void student_name(char *name)
         name[length - 1] = '\0';
 }
 
-/*******************************************      Student's Gender Function   ***********************/
-char getStudentGender()
+/*******************************************      Note's Status Function   ***********************/
+char getNoteStatus()
 {
-    char gender;
+    char Done_not;
     char isValid = 0;
 
     do {
-        gender = getchar();
+        Done_not = getchar();
 
         // Check if the input is valid
-        if (gender == 'M' || gender == 'm' || gender == 'F' || gender == 'f')
+        if (Done_not == 'D' || Done_not == 'N' || Done_not == 'd' || Done_not == 'n')
         {
             isValid = 1;
-            if (gender == 'm')
+            if (Done_not == 'd')
             {
-                gender = 'M';
+                Done_not = 'D';
             }
-            if (gender == 'f')
+            if (Done_not == 'n')
             {
-                gender = 'F';
+                Done_not = 'N';
             }
         }
-        else printf("Invalid input! Please enter either 'M' or 'F'.\n");
+        else printf("Invalid input! Please enter either 'D' for 'Done' or 'N' for 'Not Done'.\n");
 
         // Clear input buffer
         while (getchar() != '\n'); // Clearing the input buffer
 
     } while (!isValid);
 
-    return gender;
+    return Done_not;
 }
 
-/*******************************************      Student's Age Function   ***********************/
-char getStudentAge()
+/****************************************     add a Note to the array Functions   ***********************/
+// Function to add a Note to the array
+int addNote(char Note[], char Done_NotDone)
 {
-    char age;
-    char isValid = 0;
-
-    do {
-        //printf("Enter student's age (1-30): ");
-        scanf("%d", &age);
-
-        // Check if the input is within the valid range
-        if (age >= 1 && age <= 30) isValid = 1;
-        else printf("Invalid input! Please enter an age between 1 and 30.\n");
-
-        // Clear input buffer
-        while (getchar() != '\n'); // Clearing the input buffer
-
-    } while (!isValid);
-
-    return age;
-}
-
-/*******************************************      Student's Study Year Function   ***********************/
-char getStudentStudyYear()
-{
-    char study_year;
-    char isValid = 0;
-
-    do {
-        //printf("Enter student's age (1-5): ");
-        scanf("%d", &study_year);
-
-        // Check if the input is within the valid range
-        if (study_year >= 1 && study_year <= 5) isValid = 1;
-        else printf("Invalid input! Please enter an study year between 1 and 5.\n");
-
-        // Clear input buffer
-        while (getchar() != '\n'); // Clearing the input buffer
-
-    } while (!isValid);
-
-    return study_year;
-}
-
-/****************************************     add a student to the array Functions   ***********************/
-// Function to add a student to the array
-int addStudent(char name[], char gender, char age, char studyYear)
-{
-    for (int i = 0; i < MAX_STUDENTS; ++i)
+    for (int i = 0; i < MAX_Notes; ++i)
     {
-        if (studentArray[i].isEmpty)
+        if (NoteArray[i].isEmpty)
         {
-            strncpy(studentArray[i].name, name, MAX_NAME_LENGTH - 1);
-            studentArray[i].name[MAX_NAME_LENGTH - 1] = '\0';
-            studentArray[i].gender = gender;
-            studentArray[i].age = age;
-            studentArray[i].studyYear = studyYear;
-            studentArray[i].studentID = i + 1; // Assigning student ID sequentially
-            studentArray[i].isEmpty = 0; // Set as filled
-            return studentArray[i].studentID;
+            strncpy(NoteArray[i].name, Note, MAX_NAME_LENGTH - 1);
+            NoteArray[i].name[MAX_NAME_LENGTH - 1] = '\0';
+            NoteArray[i].Done_notDone = Done_NotDone;
+            NoteArray[i].NoteID = i + 1; // Assigning Note ID sequentially
+            NoteArray[i].isEmpty = 0; // Set as filled
+            return NoteArray[i].NoteID;
         }
     }
-    printf("Cannot add more students. Array is full.\n");
+    printf("Cannot add more Notes. Array is full.\n");
     return -1; // Return -1 indicating failure
 }
