@@ -1,3 +1,6 @@
-1,hoooooooooo,N,56,1813641872
-2,the first note,N,56,1813641872
-3,The secend note,D,56,1813641872
+1,hte note,N
+2,note again,D
+3,the final note ISA,D
+5,    ,D
+6,123,N
+7,3242,D

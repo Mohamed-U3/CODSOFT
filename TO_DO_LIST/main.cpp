@@ -58,7 +58,10 @@ int main()
 
         /******************************* case 2   *****************************/
         case '2':                   //in case B or b is pressed
-        deleteExistNote();       //Delete Student by the ID from the array
+        displayNotes();
+        deleteExistNote();          //Delete Student by the ID from the array
+        system("cls");
+        displayNotes();
         while(1)                    //wait until user press any key
         {
             if(kbhit())             //if any key is pressed
@@ -78,7 +81,10 @@ int main()
         break;
         /******************************* case 4   *****************************/
         case '4':                   //in case E or e is pressed
+        displayNotes();
         EditExistNote();
+        system("cls");
+        displayNotes();
         while(1)                    //wait until user press any key
         {
             if(kbhit())             //if any key is pressed

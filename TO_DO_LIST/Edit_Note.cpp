@@ -9,7 +9,6 @@ using namespace std;
 
 void EditExistNote() //like main function in this file
 {
-    system("cls");                          //clear the screen
     ///////////////////////////////////////////////////////////////////////////////
     // getting Note ID part
     printf("Note's ID Mark as Done: ");

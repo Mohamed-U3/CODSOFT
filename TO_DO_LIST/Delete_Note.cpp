@@ -8,7 +8,6 @@
 
 void deleteExistNote() //like main function in this file
 {
-    system("cls");                          //clear the screen
     ///////////////////////////////////////////////////////////////////////////////
     // getting Note ID part
     printf("Note's ID to be deleted: ");

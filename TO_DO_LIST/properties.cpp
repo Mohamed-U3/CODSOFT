@@ -26,7 +26,7 @@ void saveToCSV(const char *filename)
     {
         if (!NoteArray[i].isEmpty)
         {
-            fprintf(file, "%d,%s,%c,%d,%d\n", NoteArray[i].NoteID, NoteArray[i].name,
+            fprintf(file, "%d,%s,%c\n", NoteArray[i].NoteID, NoteArray[i].name,
                     NoteArray[i].Done_notDone);
         }
     }
@@ -50,7 +50,7 @@ void loadFromCSV(const char *filename)
     int studentID, age, studyYear;
     char name[MAX_NAME_LENGTH], Done_notDone;
 
-    while (fscanf(file, "%d,%[^,],%c,%d,%d\n", &studentID, name, &Done_notDone, &age, &studyYear) != EOF)
+    while (fscanf(file, "%d,%[^,],%c\n", &studentID, name, &Done_notDone) != EOF)
     {
         strncpy(NoteArray[studentID - 1].name, name, MAX_NAME_LENGTH - 1);
         NoteArray[studentID - 1].name[MAX_NAME_LENGTH - 1] = '\0';
