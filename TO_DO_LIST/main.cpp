@@ -68,7 +68,7 @@ int main()
         /******************************* case 3   *****************************/
         case '3':                   //in case C or c is pressed
         system("cls");              //clear the screen
-        displayStudents();          //Display all students in the array
+        displayNotes();          //Display all students in the array
         while(1)                    //wait until user press any key
         {
             if(kbhit())             //if any key is pressed

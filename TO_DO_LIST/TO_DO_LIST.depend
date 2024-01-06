@@ -19,7 +19,7 @@
 
 1704559960 d:\projects\codsoft\to_do_list\delete_note.h
 
-1704558337 source:d:\projects\codsoft\to_do_list\display_note.cpp
+1704561242 source:d:\projects\codsoft\to_do_list\display_note.cpp
 	<cstdio>
 	"properties.h"
 
@@ -35,7 +35,7 @@
 	"Delete_Note.h"
 	"Display_Note.h"
 
-1704553012 d:\projects\codsoft\to_do_list\display_note.h
+1704561219 d:\projects\codsoft\to_do_list\display_note.h
 
 1704558351 source:d:\projects\codsoft\to_do_list\properties.cpp
 	<stdio.h>

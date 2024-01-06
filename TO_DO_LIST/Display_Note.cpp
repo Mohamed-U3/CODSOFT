@@ -1,9 +1,9 @@
 #include <cstdio>
 #include "properties.h"
 
-void displayStudents()
+void displayNotes()
 {
-    printf("Student List:\n");
+    printf("Tasks/Notes List:\n");
     printf("-----------------------------------------------------------------------\n");
     printf("| %-3s | %-50s | %-8s |\n", "ID", "Name", "Done/Not");
     printf("-----------------------------------------------------------------------\n");
