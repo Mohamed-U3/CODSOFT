@@ -19,11 +19,11 @@
 
 1704559960 d:\projects\codsoft\to_do_list\delete_note.h
 
-1704561242 source:d:\projects\codsoft\to_do_list\display_note.cpp
+1704561315 source:d:\projects\codsoft\to_do_list\display_note.cpp
 	<cstdio>
 	"properties.h"
 
-1704559840 source:d:\projects\codsoft\to_do_list\main.cpp
+1704562561 source:d:\projects\codsoft\to_do_list\main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -34,6 +34,7 @@
 	"Add_Note.h"
 	"Delete_Note.h"
 	"Display_Note.h"
+	"Edit_Note.h"
 
 1704561219 d:\projects\codsoft\to_do_list\display_note.h
 
@@ -44,4 +45,14 @@
 	"properties.h"
 
 1704558324 d:\projects\codsoft\to_do_list\properties.h
+
+1704562761 d:\projects\codsoft\to_do_list\edit_note.h
+
+1704562768 source:d:\projects\codsoft\to_do_list\edit_note.cpp
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	<iostream>
+	"properties.h"
+	"Edit_Note.h"
 

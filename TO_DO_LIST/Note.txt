@@ -1,1 +1,3 @@
-1,hoooooooooo,D,1813351403,1813641872
+1,hoooooooooo,N,56,1813641872
+2,the first note,N,56,1813641872
+3,The secend note,D,56,1813641872

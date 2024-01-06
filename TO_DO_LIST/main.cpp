@@ -9,6 +9,7 @@
 #include "Add_Note.h"
 #include "Delete_Note.h"
 #include "Display_Note.h"
+#include "Edit_Note.h"
 
 int main()
 {
@@ -77,7 +78,7 @@ int main()
         break;
         /******************************* case 4   *****************************/
         case '4':                   //in case E or e is pressed
-        printf("Mark Done by ID.");
+        EditExistNote();
         while(1)                    //wait until user press any key
         {
             if(kbhit())             //if any key is pressed
