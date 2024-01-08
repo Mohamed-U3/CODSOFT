@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1704728692 source:d:\projects\codsoft\library_management_system\main.cpp
+	<iostream>
+	<vector>
+	<string>
+	<algorithm>
+
