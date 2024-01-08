@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <windows.h>
 
 using namespace std;
 
@@ -148,13 +149,27 @@ public:
             return;
         }
 
-        cout << left << setw(25) << "Title" << setw(25) << "Author" << setw(25) << "ISBN" << setw(15) << "Availability" << setw(15) << "DueDate" << endl;
+        cout << left <<"| "<< setw(25) << "Title" << "| "<< setw(15) << "Author" << "| "<< setw(25) << "ISBN" << "| "<< setw(15) << "Availability" << "| "<< setw(15) << "DueDate" << endl;
         cout << "========================================================================================================" << endl;
 
         for (const Book& book : books)
         {
-            cout << left << setw(25) << book.title << setw(25) << book.author << setw(25) << book.ISBN
-                 << setw(15) << (book.isAvailable ? "Available" : "Not Available") << setw(15) << book.dueDate << endl;
+            cout << left << "| "<< setw(25) << truncateString(book.title, 25) << "| "<< setw(15) << truncateString(book.author, 15) << "| "<< setw(25) << book.ISBN
+                 << "| "<< setw(15) << (book.isAvailable ? "Available" : "Not Available") << "| "<< setw(15) << book.dueDate << endl;
+        }
+        cout << "========================================================================================================" << endl;
+    }
+
+    // Function to truncate string if longer than specified width
+    string truncateString(const string& str, int width)
+    {
+        if (str.length() > width)
+        {
+            return str.substr(0, width - 3) + "..."; // Truncate and append "..." for indication
+        }
+        else
+        {
+            return str;
         }
     }
 
@@ -179,13 +194,18 @@ public:
 
 void displayMenu()
 {
-    cout << "Library Management System\n";
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    SetConsoleTextAttribute(hConsole, 2); // Set text color to red
+    cout << "Library Management System\n\n";
+    SetConsoleTextAttribute(hConsole, 23); // Set text color to weight
     cout << "1. Add Book\n";
     cout << "2. Edit Book\n";
     cout << "3. Check Out Book\n";
     cout << "4. Return Book\n";
     cout << "5. Display Library\n";
-    cout << "6. Exit\n";
+    cout << "6. Exit\n\n";
+    SetConsoleTextAttribute(hConsole, 7); // Set text color to weight
     cout << "Enter your choice: ";
 }
 
@@ -204,8 +224,12 @@ void addBookToLibrary(Library& library)
 
 void checkoutBookFromLibrary(Library& library)
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string ISBN;
-    cout << "Enter book ISBN to check out: ";
+    SetConsoleTextAttribute(hConsole, 4); // Set text color to red
+    cout << "\nInstructions: select ISBN and copy (Ctrl + C) and paste it (Mouse right Click). ";
+    SetConsoleTextAttribute(hConsole, 7); // Set text color to red
+    cout << "\nEnter book ISBN to check out: ";
     //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 
@@ -214,8 +238,12 @@ void checkoutBookFromLibrary(Library& library)
 
 void returnBookToLibrary(Library& library)
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string ISBN;
-    cout << "Enter book ISBN to return: ";
+    SetConsoleTextAttribute(hConsole, 4); // Set text color to red
+    cout << "\nInstructions: select ISBN and copy (Ctrl + C) and paste it (Mouse right Click). ";
+    SetConsoleTextAttribute(hConsole, 7); // Reset text color to default
+    cout << "\nEnter book ISBN to return: ";
     //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 
@@ -224,8 +252,12 @@ void returnBookToLibrary(Library& library)
 
 void editBookInLibrary(Library& library)
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     string ISBN;
-    cout << "Enter book ISBN to edit: ";
+    SetConsoleTextAttribute(hConsole, 4); // Set text color to red
+    cout << "\nInstructions: select ISBN and copy (Ctrl + C) and paste it (Mouse right Click). ";
+    SetConsoleTextAttribute(hConsole, 7); // Reset text color to default
+    cout << "\nEnter book ISBN to edit: ";
     //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 

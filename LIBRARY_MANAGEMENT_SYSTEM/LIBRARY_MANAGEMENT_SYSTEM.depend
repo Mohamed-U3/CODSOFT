@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1704733238 source:d:\projects\codsoft\library_management_system\main.cpp
+1704739547 source:d:\projects\codsoft\library_management_system\main.cpp
 	<iostream>
 	<fstream>
 	<vector>
@@ -7,4 +7,5 @@
 	<sstream>
 	<iomanip>
 	<algorithm>
+	<windows.h>
 
