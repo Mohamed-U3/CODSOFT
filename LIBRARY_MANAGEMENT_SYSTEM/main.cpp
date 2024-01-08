@@ -8,7 +8,8 @@
 
 using namespace std;
 
-class Book {
+class Book
+{
 public:
     string title;
     string author;
@@ -19,33 +20,85 @@ public:
     Book(string t, string a, string i) : title(t), author(a), ISBN(i), isAvailable(true), dueDate("") {}
 };
 
-class Library {
+class Library
+{
 private:
     vector<Book> books;
     string fileName;
 
 public:
-    Library(const string& file) : fileName(file) {
-        loadBooksFromCSV(); // Load books from CSV file when Library is initialized
+    Library(const string& file) : fileName(file)
+    {
+        loadBooksFromCSV();
     }
 
-    void addBook(string title, string author, string ISBN) {
+    void addBook(string title, string author, string ISBN)
+    {
         Book newBook(title, author, ISBN);
         books.push_back(newBook);
-        saveBooksToCSV(); // Automatically save to CSV after adding a book
+        saveBooksToCSV();
     }
 
-    // Other functions for edit, checkout, return...
+    void checkoutBook(const string& ISBN)
+    {
+        for (Book& book : books)
+        {
+            if (book.ISBN == ISBN)
+            {
+                if (book.isAvailable)
+                {
+                    book.isAvailable = false;
+                    book.dueDate = "Some Due Date Logic"; // Implement due date setting
+                    saveBooksToCSV();
+                    cout << "Book with ISBN " << ISBN << " has been checked out." << endl;
+                    return;
+                }
+                else
+                {
+                    cout << "Book with ISBN " << ISBN << " is already checked out." << endl;
+                    return;
+                }
+            }
+        }
+        cout << "Book with ISBN " << ISBN << " not found." << endl;
+    }
 
-    void saveBooksToCSV() {
+    void returnBook(const string& ISBN)
+    {
+        for (Book& book : books)
+        {
+            if (book.ISBN == ISBN)
+            {
+                if (!book.isAvailable)
+                {
+                    book.isAvailable = true;
+                    book.dueDate = ""; // Implement due date clearing
+                    saveBooksToCSV();
+                    cout << "Book with ISBN " << ISBN << " has been returned." << endl;
+                    return;
+                }
+                else
+                {
+                    cout << "Book with ISBN " << ISBN << " is already available." << endl;
+                    return;
+                }
+            }
+        }
+        cout << "Book with ISBN " << ISBN << " not found." << endl;
+    }
+
+    void saveBooksToCSV()
+    {
         ofstream file(fileName);
-        if (!file.is_open()) {
+        if (!file.is_open())
+        {
             cout << "Error opening file!" << endl;
             return;
         }
 
         file << "Title,Author,ISBN,Availability,DueDate\n";
-        for (const Book& book : books) {
+        for (const Book& book : books)
+        {
             file << book.title << "," << book.author << "," << book.ISBN << ","
                  << (book.isAvailable ? "Available" : "Not Available") << ","
                  << book.dueDate << "\n";
@@ -53,18 +106,20 @@ public:
         file.close();
     }
 
-    void loadBooksFromCSV() {
+    void loadBooksFromCSV()
+    {
         ifstream file(fileName);
         if (!file.is_open()) {
             cout << "Error opening file!" << endl;
             return;
         }
 
-        books.clear(); // Clear existing book data before loading from the file
+        books.clear();
 
         string line;
-        getline(file, line); // Skip the header line
-        while (getline(file, line)) {
+        getline(file, line);
+        while (getline(file, line))
+        {
             stringstream ss(line);
             string title, author, ISBN, availability, dueDate;
 
@@ -85,8 +140,10 @@ public:
         file.close();
     }
 
-    void displayLibrary() {
-        if (books.empty()) {
+    void displayLibrary()
+    {
+        if (books.empty())
+        {
             cout << "Library is empty." << endl;
             return;
         }
@@ -100,9 +157,28 @@ public:
                  << setw(15) << (book.isAvailable ? "Available" : "Not Available") << setw(15) << book.dueDate << endl;
         }
     }
+
+    void editBook(const string& ISBN)
+    {
+        for (Book& book : books)
+        {
+            if (book.ISBN == ISBN)
+            {
+                cout << "Enter new title: ";
+                getline(cin >> ws, book.title);
+                cout << "Enter new author: ";
+                getline(cin, book.author);
+                cout << "Book with ISBN " << ISBN << " has been updated." << endl;
+                saveBooksToCSV();
+                return;
+            }
+        }
+        cout << "Book with ISBN " << ISBN << " not found." << endl;
+    }
 };
 
-void displayMenu() {
+void displayMenu()
+{
     cout << "Library Management System\n";
     cout << "1. Add Book\n";
     cout << "2. Edit Book\n";
@@ -113,7 +189,8 @@ void displayMenu() {
     cout << "Enter your choice: ";
 }
 
-void addBookToLibrary(Library& library) {
+void addBookToLibrary(Library& library)
+{
     string title, author, ISBN;
     cout << "Enter book title: ";
     getline(cin >> ws, title);
@@ -125,7 +202,38 @@ void addBookToLibrary(Library& library) {
     library.addBook(title, author, ISBN);
 }
 
-int main() {
+void checkoutBookFromLibrary(Library& library)
+{
+    string ISBN;
+    cout << "Enter book ISBN to check out: ";
+    cin.ignore();
+    getline(cin, ISBN);
+
+    library.checkoutBook(ISBN);
+}
+
+void returnBookToLibrary(Library& library)
+{
+    string ISBN;
+    cout << "Enter book ISBN to return: ";
+    cin.ignore();
+    getline(cin, ISBN);
+
+    library.returnBook(ISBN);
+}
+
+void editBookInLibrary(Library& library)
+{
+    string ISBN;
+    cout << "Enter book ISBN to edit: ";
+    cin.ignore();
+    getline(cin, ISBN);
+
+    library.editBook(ISBN);
+}
+
+int main()
+{
     const string fileName = "library_books.csv";
     Library library(fileName);
 
@@ -134,6 +242,7 @@ int main() {
     {
         displayMenu();
         cin >> choice;
+        cin.ignore();
 
         system("cls");
 
@@ -143,13 +252,22 @@ int main() {
                 addBookToLibrary(library);
                 break;
             case 2:
-                // Call edit book function
+                library.displayLibrary();
+                editBookInLibrary(library);
+                system("pause");
+                system("cls");
                 break;
             case 3:
-                // Call checkout function
+                library.displayLibrary();
+                checkoutBookFromLibrary(library);
+                system("pause");
+                system("cls");
                 break;
             case 4:
-                // Call return book function
+                library.displayLibrary();
+                returnBookToLibrary(library);
+                system("pause");
+                system("cls");
                 break;
             case 5:
                 library.displayLibrary();
