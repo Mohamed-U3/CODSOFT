@@ -1,84 +1,167 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <iomanip>
 #include <algorithm>
 
 using namespace std;
 
-class Book
-{
-    public:
-        string title;
-        string author;
-        string ISBN;
-        bool isAvailable;
+class Book {
+public:
+    string title;
+    string author;
+    string ISBN;
+    bool isAvailable;
+    string dueDate;
 
-    Book(string t, string a, string i) : title(t), author(a), ISBN(i), isAvailable(true)
-    {
-
-    }
+    Book(string t, string a, string i) : title(t), author(a), ISBN(i), isAvailable(true), dueDate("") {}
 };
 
-class Library
-{
-    private:
-        vector<Book> books;
+class Library {
+private:
+    vector<Book> books;
+    string fileName;
 
-    public:
-        void addBook(string title, string author, string ISBN)
-        {
+public:
+    Library(const string& file) : fileName(file) {
+        loadBooksFromCSV(); // Load books from CSV file when Library is initialized
+    }
+
+    void addBook(string title, string author, string ISBN) {
+        Book newBook(title, author, ISBN);
+        books.push_back(newBook);
+        saveBooksToCSV(); // Automatically save to CSV after adding a book
+    }
+
+    // Other functions for edit, checkout, return...
+
+    void saveBooksToCSV() {
+        ofstream file(fileName);
+        if (!file.is_open()) {
+            cout << "Error opening file!" << endl;
+            return;
+        }
+
+        file << "Title,Author,ISBN,Availability,DueDate\n";
+        for (const Book& book : books) {
+            file << book.title << "," << book.author << "," << book.ISBN << ","
+                 << (book.isAvailable ? "Available" : "Not Available") << ","
+                 << book.dueDate << "\n";
+        }
+        file.close();
+    }
+
+    void loadBooksFromCSV() {
+        ifstream file(fileName);
+        if (!file.is_open()) {
+            cout << "Error opening file!" << endl;
+            return;
+        }
+
+        books.clear(); // Clear existing book data before loading from the file
+
+        string line;
+        getline(file, line); // Skip the header line
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string title, author, ISBN, availability, dueDate;
+
+            getline(ss, title, ',');
+            getline(ss, author, ',');
+            getline(ss, ISBN, ',');
+            getline(ss, availability, ',');
+            getline(ss, dueDate, ',');
+
+            bool isAvailable = (availability == "Available");
+
             Book newBook(title, author, ISBN);
+            newBook.isAvailable = isAvailable;
+            newBook.dueDate = dueDate;
+
             books.push_back(newBook);
         }
+        file.close();
+    }
 
-        vector<Book*> searchBook(const string& keyword)
-        {
-            vector<Book*> foundBooks;
-            for (auto& book : books)
-            {
-                // Convert keyword and book information to lowercase for case-insensitive comparison
-                string keywordLower = keyword;
-                transform(keywordLower.begin(), keywordLower.end(), keywordLower.begin(), ::tolower);
-                string titleLower = book.title;
-                transform(titleLower.begin(), titleLower.end(), titleLower.begin(), ::tolower);
-                string authorLower = book.author;
-                transform(authorLower.begin(), authorLower.end(), authorLower.begin(), ::tolower);
-                string ISBNLower = book.ISBN;
-                transform(ISBNLower.begin(), ISBNLower.end(), ISBNLower.begin(), ::tolower);
-
-                if (titleLower.find(keywordLower)   != string::npos ||
-                    authorLower.find(keywordLower)  != string::npos ||
-                    ISBNLower.find(keywordLower)    != string::npos      )
-                {   foundBooks.push_back(&book);        }
-            }
-        return foundBooks;
+    void displayLibrary() {
+        if (books.empty()) {
+            cout << "Library is empty." << endl;
+            return;
         }
+
+        cout << left << setw(25) << "Title" << setw(25) << "Author" << setw(25) << "ISBN" << setw(15) << "Availability" << setw(15) << "DueDate" << endl;
+        cout << "========================================================================================================" << endl;
+
+        for (const Book& book : books)
+        {
+            cout << left << setw(25) << book.title << setw(25) << book.author << setw(25) << book.ISBN
+                 << setw(15) << (book.isAvailable ? "Available" : "Not Available") << setw(15) << book.dueDate << endl;
+        }
+    }
 };
 
-int main()
-{
-    Library library;
+void displayMenu() {
+    cout << "Library Management System\n";
+    cout << "1. Add Book\n";
+    cout << "2. Edit Book\n";
+    cout << "3. Check Out Book\n";
+    cout << "4. Return Book\n";
+    cout << "5. Display Library\n";
+    cout << "6. Exit\n";
+    cout << "Enter your choice: ";
+}
 
-    library.addBook("The Catcher in the Rye", "J.D. Salinger", "9780316769488");
-    library.addBook("To Kill a Mockingbird", "Harper Lee", "9780061120084");
-    library.addBook("1984", "George Orwell", "9780451524935");
+void addBookToLibrary(Library& library) {
+    string title, author, ISBN;
+    cout << "Enter book title: ";
+    getline(cin >> ws, title);
+    cout << "Enter book author: ";
+    getline(cin, author);
+    cout << "Enter book ISBN: ";
+    getline(cin, ISBN);
 
-    string searchKeyword;
-    cout << "Enter book name, author, or ISBN to search: ";
-    getline(cin, searchKeyword);
+    library.addBook(title, author, ISBN);
+}
 
-    vector<Book*> foundBooks = library.searchBook(searchKeyword);
+int main() {
+    const string fileName = "library_books.csv";
+    Library library(fileName);
 
-    if (foundBooks.empty())
+    int choice = 0;
+    while (choice != 6)
     {
-        cout << "No books found." << endl;
-    }
-    else
-    {
-        cout << "Books found:" << endl;
-        for (auto book : foundBooks)
+        displayMenu();
+        cin >> choice;
+
+        system("cls");
+
+        switch (choice)
         {
-            cout << "- " << book->title << " by " << book->author << " (ISBN: " << book->ISBN << ")" << endl;
+            case 1:
+                addBookToLibrary(library);
+                break;
+            case 2:
+                // Call edit book function
+                break;
+            case 3:
+                // Call checkout function
+                break;
+            case 4:
+                // Call return book function
+                break;
+            case 5:
+                library.displayLibrary();
+                system("pause");
+                system("cls");
+                break;
+            case 6:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
         }
     }
 
