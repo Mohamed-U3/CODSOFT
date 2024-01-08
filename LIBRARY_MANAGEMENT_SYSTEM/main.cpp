@@ -206,7 +206,7 @@ void checkoutBookFromLibrary(Library& library)
 {
     string ISBN;
     cout << "Enter book ISBN to check out: ";
-    cin.ignore();
+    //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 
     library.checkoutBook(ISBN);
@@ -216,7 +216,7 @@ void returnBookToLibrary(Library& library)
 {
     string ISBN;
     cout << "Enter book ISBN to return: ";
-    cin.ignore();
+    //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 
     library.returnBook(ISBN);
@@ -226,7 +226,7 @@ void editBookInLibrary(Library& library)
 {
     string ISBN;
     cout << "Enter book ISBN to edit: ";
-    cin.ignore();
+    //cin.ignore();  //that line was causing a bug
     getline(cin, ISBN);
 
     library.editBook(ISBN);
