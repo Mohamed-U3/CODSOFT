@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <chrono>
+#include <ctime>
 #include <algorithm>
 #include <windows.h>
 
@@ -26,6 +28,19 @@ class Library
 private:
     vector<Book> books;
     string fileName;
+
+    // Helper function to calculate the due date for books
+    string calculateDueDate()
+    {
+        auto now = chrono::system_clock::now();
+        auto nextWeek = now + chrono::hours(24 * 7); // One week from now
+        time_t nextWeekTime = chrono::system_clock::to_time_t(nextWeek);
+
+        tm dueDate = *localtime(&nextWeekTime);
+        stringstream ss;
+        ss << put_time(&dueDate, "%Y-%m-%d"); // Format as YYYY-MM-DD
+        return ss.str();
+    }
 
 public:
     Library(const string& file) : fileName(file)
@@ -71,7 +86,7 @@ public:
                 if (book.isAvailable)
                 {
                     book.isAvailable = false;
-                    book.dueDate = "Some Due Date Logic"; // Implement due date setting
+                    book.dueDate = calculateDueDate(); // Set the due date one week from now
                     saveBooksToCSV();
                     cout << "Book with ISBN " << ISBN << " has been checked out." << endl;
                     return;
@@ -212,6 +227,31 @@ public:
         }
         cout << "Book with ISBN " << ISBN << " not found." << endl;
     }
+
+    // Function to calculate fines for overdue books
+    double calculateFine(const Book& book)
+    {
+        if (!book.isAvailable && !book.dueDate.empty())
+        {
+            // Calculate the difference in days between today and the due date
+            auto now = std::chrono::system_clock::now();
+            std::tm dueDate = {};
+            std::stringstream ss(book.dueDate);
+            ss >> std::get_time(&dueDate, "%Y-%m-%d");
+
+            std::time_t dueTime = std::mktime(&dueDate);
+            std::chrono::system_clock::time_point dueDateTime = std::chrono::system_clock::from_time_t(dueTime);
+
+            auto overdueDuration = now - dueDateTime;
+            int overdueDays = std::chrono::duration_cast<std::chrono::hours>(overdueDuration).count() / 24;
+
+            if (overdueDays > 0) {
+                // Fine $1 per day for overdue books
+                return static_cast<double>(overdueDays);
+            }
+        }
+        return 0.0; // No fine if book is available or if due date is empty
+    }
 };
 
 void displayMenu()
@@ -331,18 +371,21 @@ int main()
             case 2:
                 library.displayLibrary();
                 editBookInLibrary(library);
+                library.displayLibrary();
                 system("pause");
                 system("cls");
                 break;
             case 3:
                 library.displayLibrary();
                 checkoutBookFromLibrary(library);
+                library.displayLibrary();
                 system("pause");
                 system("cls");
                 break;
             case 4:
                 library.displayLibrary();
                 returnBookToLibrary(library);
+                library.displayLibrary();
                 system("pause");
                 system("cls");
                 break;
