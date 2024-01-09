@@ -110,9 +110,18 @@ public:
                 if (!book.isAvailable)
                 {
                     book.isAvailable = true;
+                    double fine = calculateFine(book);
+                    if (fine > 0)
+                    {
+                        cout << "Book with ISBN " << ISBN << " has been returned. ";
+                        cout << "Overdue fine: $" << fine << endl;
+                    }
+                    else
+                    {
+                        cout << "Book with ISBN " << ISBN << " has been returned. No overdue fine.\n" << endl;
+                    }
                     book.dueDate = ""; // Implement due date clearing
                     saveBooksToCSV();
-                    cout << "Book with ISBN " << ISBN << " has been returned." << endl;
                     return;
                 }
                 else
@@ -231,27 +240,31 @@ public:
     // Function to calculate fines for overdue books
     double calculateFine(const Book& book)
     {
-        if (!book.isAvailable && !book.dueDate.empty())
+        if (book.isAvailable)
         {
-            // Calculate the difference in days between today and the due date
+            // Get the current system time
             auto now = std::chrono::system_clock::now();
-            std::tm dueDate = {};
-            std::stringstream ss(book.dueDate);
-            ss >> std::get_time(&dueDate, "%Y-%m-%d");
 
+            // Convert due date string to time_point
+            std::tm dueDate = {};
+            std::istringstream ss(book.dueDate);
+            ss >> std::get_time(&dueDate, "%Y-%m-%d");
             std::time_t dueTime = std::mktime(&dueDate);
             std::chrono::system_clock::time_point dueDateTime = std::chrono::system_clock::from_time_t(dueTime);
 
-            auto overdueDuration = now - dueDateTime;
-            int overdueDays = std::chrono::duration_cast<std::chrono::hours>(overdueDuration).count() / 24;
+            // Calculate the duration between due date and now
+            std::chrono::duration<double> overdueDuration = now - dueDateTime;
 
-            if (overdueDays > 0) {
+            // Calculate overdue days and fines
+            int overdueDays = (double)std::chrono::duration_cast<std::chrono::hours>(overdueDuration).count() / 24;
+            if (overdueDays > 0)
+            {
                 // Fine $1 per day for overdue books
                 return static_cast<double>(overdueDays);
             }
         }
         return 0.0; // No fine if book is available or if due date is empty
-    }
+     }
 };
 
 void displayMenu()

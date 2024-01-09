@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1704806166 source:d:\projects\codsoft\library_management_system\main.cpp
+1704811659 source:d:\projects\codsoft\library_management_system\main.cpp
 	<iostream>
 	<fstream>
 	<vector>
 	<string>
 	<sstream>
 	<iomanip>
+	<chrono>
+	<ctime>
 	<algorithm>
 	<windows.h>
 
